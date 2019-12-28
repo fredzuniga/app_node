@@ -13,8 +13,22 @@ var groupsRouter = require('./routes/groups');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hjs');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'hjs');
+
+
+// nunjucks
+var nunjucks  = require('nunjucks');
+app.use(express.static('/public'));
+
+// Apply nunjucks and add custom filter and function (for example). 
+var env = nunjucks.configure(['views/'], { // set folders with templates
+    autoescape: true, 
+    express: app
+});
+
+app.set('view engine', 'html');
+
 
 app.use(logger('dev'));
 app.use(express.json());
